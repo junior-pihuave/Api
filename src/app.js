@@ -7,27 +7,25 @@ import productosRoutes from "./routes/productos.routes.js";
 
 const app = express();
 
-const corsOptions = {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-  credentials: true,
-};
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  }),
+);
 
-app.use(cors(corsOptions));
 app.use(express.json());
 
-// SERVIR IMÁGENES
+// 🔥 SERVIR IMÁGENES (CLAVE)
 app.use("/uploads", express.static("uploads"));
 
-// rutas
+// RUTAS
 app.use("/api", authRoutes);
 app.use("/api", clientesRoutes);
 app.use("/api", productosRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({
-    message: "Endpoint not found",
-  });
+  res.status(404).json({ message: "Endpoint not found" });
 });
 
 export default app;
