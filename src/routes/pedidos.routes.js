@@ -1,8 +1,18 @@
 import { Router } from "express";
-// Cambia 'pedidos.ctrl.js' por 'pedidos.Ctrl.js' (respetando la C mayúscula)
-import { guardarPedido } from "../controladores/pedidos.Ctrl.js";
+// Asegúrate de importar todas las funciones necesarias desde tu controlador de clientes
+import {
+  postInsertarCliente,
+  putCliente,
+  patchCliente,
+  deleteCliente,
+} from "../controladores/clientes.Ctrl.js"; // O el nombre exacto de tu archivo
 
 const router = Router();
-router.post("/pedidos", guardarPedido);
+
+// Rutas de Clientes
+router.post("/clientes", postInsertarCliente);
+router.put("/clientes/:id", putCliente);
+router.patch("/clientes/:id", patchCliente);
+router.delete("/clientes/:id", deleteCliente);
 
 export default router;
