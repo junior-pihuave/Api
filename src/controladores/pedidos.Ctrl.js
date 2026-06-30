@@ -74,7 +74,40 @@ export const obtenerPedidos = async (req, res) => {
 
 // Placeholder para otras funciones
 export const obtenerPedidoPorId = async (req, res) => {
-  res.json({ mensaje: "Pendiente" });
+  try {
+    const { id } = req.params;
+
+    // 1. Obtener datos del pedido y el cliente
+    const [rows] = await conmysql.query(
+      `SELECT p.*, c.cli_nombre, c.cli_identificacion 
+       FROM pedidos p 
+       JOIN clientes c ON p.cli_id = c.cli_id 
+       WHERE p.ped_id = ?`,
+      [id],
+    );
+
+    if (rows.length === 0)
+      return res.status(404).json({ mensaje: "Pedido no encontrado" });
+
+    // 2. Obtener el detalle de los productos
+    const [detalle] = await conmysql.query(
+      `SELECT pd.*, pr.prod_nombre 
+       FROM pedidos_detalle pd
+       JOIN productos pr ON pd.prod_id = pr.prod_id
+       WHERE pd.ped_id = ?`,
+      [id],
+    );
+
+    // 3. Combinar todo en un solo objeto
+    const pedidoCompleto = {
+      ...rows[0],
+      detalle: detalle,
+    };
+
+    res.json(pedidoCompleto);
+  } catch (error) {
+    res.status(500).json({ mensaje: error.message });
+  }
 };
 export const actualizarPedido = async (req, res) => {
   res.json({ mensaje: "Pendiente" });
