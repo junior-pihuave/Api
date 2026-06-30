@@ -9,7 +9,7 @@ import {
   putCliente,
   patchCliente,
   deleteCliente,
-} from "../controladores/clientesCtrl.js";
+} from "../controladores/clientes.Ctrl.js";
 
 const router = Router();
 
