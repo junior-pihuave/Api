@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { guardarPedido } from "../controladores/pedidos.ctrl.js";
+// Cambia 'pedidos.ctrl.js' por 'pedidos.Ctrl.js' (respetando la C mayúscula)
+import { guardarPedido } from "../controladores/pedidos.Ctrl.js";
 
 const router = Router();
 router.post("/pedidos", guardarPedido);
